@@ -10,13 +10,11 @@ fn main() {
         }
         fishes_count[6] += temp_num;
         if i == 80 {
-            let total: i64 = fishes_count.iter().sum();
-            println!("Part1-> {}", total)
+            println!("Part1-> {}", fishes_count.iter().sum::<i64>())
         }
     }
 
-    let total: i64 = fishes_count.iter().sum();
-    println!("Part2-> {}", total)
+    println!("Part2-> {}", fishes_count.iter().sum::<i64>())
 }
 
 fn give_vec() -> Vec<i64> {
@@ -28,9 +26,7 @@ fn give_vec() -> Vec<i64> {
         .collect();
     let mut fishes_count: Vec<i64> = vec![0; 9];
 
-    for fish in fishes.iter() {
-        fishes_count[*fish] += 1;
-    }
+    fishes.iter().for_each(|n| fishes_count[*n as usize] += 1);
 
     return fishes_count;
 }

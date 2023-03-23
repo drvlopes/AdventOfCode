@@ -45,7 +45,7 @@ fn main() {
                     overlapping.insert(point);
                 }
             } else {
-                if !vertical(line) {
+                if !diagonal(line) {
                     if !vents.insert(point) {
                         overlapping.insert(point);
                     }
@@ -57,7 +57,7 @@ fn main() {
     println!("Result -> {:?}", overlapping.len())
 }
 
-fn vertical(line: &Line) -> bool {
+fn diagonal(line: &Line) -> bool {
     if (line.point1.pointx == line.point2.pointx) || (line.point1.pointy == line.point2.pointy) {
         return false;
     }
@@ -130,7 +130,7 @@ fn give_line(line: &Line) -> HashSet<Coord> {
         } else {
             y >= secondy
         } {
-            if vertical(line) {
+            if diagonal(line) {
                 if x == last_x && y == last_y {
                     coord.insert(Coord {
                         pointx: x,
