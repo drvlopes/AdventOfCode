@@ -2,19 +2,11 @@ use std::fs;
 
 fn main() {
     let crabs = give_vec();
-    let mut lowest = 999999999;
 
-    for (i, _) in crabs.iter().enumerate() {
-        let mut soma = 0;
-        crabs.iter().for_each(|x| {
-            soma += ((x - i as i32).abs() * ((x - i as i32).abs() + 1)) / 2;
-        });
-        if soma < lowest {
-            lowest = soma;
-        }
-    }
+    let lowest = std::i32::MAX;
 
-    println!("{:?}", lowest);
+    println!("Part 1-> {:?}", part1(crabs.clone(), lowest));
+    println!("Part 2-> {:?}", part2(crabs, lowest));
 }
 
 fn give_vec() -> Vec<i32> {
@@ -26,4 +18,36 @@ fn give_vec() -> Vec<i32> {
         .collect();
 
     return crabs;
+}
+
+fn part1(crabs: Vec<i32>, mut lowest: i32) -> i32 {
+    for i in 0..crabs.len() {
+        let mut soma = 0;
+        for x in &crabs {
+            let index = i as i32;
+            if x - index != 0 {
+                soma += (x - index).abs();
+            }
+        }
+        if soma < lowest {
+            lowest = soma;
+        }
+    }
+    lowest
+}
+
+fn part2(crabs: Vec<i32>, mut lowest: i32) -> i32 {
+    for i in 0..crabs.len() {
+        let mut soma = 0;
+        for x in &crabs {
+            let index = i as i32;
+            if x - index != 0 {
+                soma += ((x - index).abs() * ((x - index).abs() + 1)) / 2;
+            }
+        }
+        if soma < lowest {
+            lowest = soma;
+        }
+    }
+    lowest
 }
