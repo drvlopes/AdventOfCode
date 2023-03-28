@@ -3,10 +3,8 @@ use std::fs;
 fn main() {
     let crabs = give_vec();
 
-    let lowest = std::i32::MAX;
-
-    println!("Part 1-> {:?}", part1(crabs.clone(), lowest));
-    println!("Part 2-> {:?}", part2(crabs, lowest));
+    println!("Part 1-> {:?}", part1(crabs.clone()));
+    println!("Part 2-> {:?}", part2(crabs));
 }
 
 fn give_vec() -> Vec<i32> {
@@ -20,34 +18,31 @@ fn give_vec() -> Vec<i32> {
     return crabs;
 }
 
-fn part1(crabs: Vec<i32>, mut lowest: i32) -> i32 {
-    for i in 0..crabs.len() {
-        let mut soma = 0;
-        for x in &crabs {
-            let index = i as i32;
-            if x - index != 0 {
-                soma += (x - index).abs();
-            }
-        }
-        if soma < lowest {
-            lowest = soma;
+fn part1(mut crabs: Vec<i32>) -> i32 {
+    crabs.sort();
+    let mid = crabs.len() / 2;
+    let mut soma = 0;
+
+    for x in &crabs {
+        let index = crabs[mid] as i32;
+        if x - index != 0 {
+            soma += (x - index).abs();
         }
     }
-    lowest
+
+    soma
 }
 
-fn part2(crabs: Vec<i32>, mut lowest: i32) -> i32 {
-    for i in 0..crabs.len() {
-        let mut soma = 0;
-        for x in &crabs {
-            let index = i as i32;
-            if x - index != 0 {
-                soma += ((x - index).abs() * ((x - index).abs() + 1)) / 2;
-            }
-        }
-        if soma < lowest {
-            lowest = soma;
+fn part2(crabs: Vec<i32>) -> i32 {
+    let alignment = crabs.iter().sum::<i32>() as f32 / (crabs.len() as f32 - 0.5);
+    let mut soma: i32 = 0;
+
+    for x in &crabs {
+        let index = alignment as i32;
+        if x - index != 0 {
+            soma += ((x - index).abs() * ((x - index).abs() + 1)) / 2;
         }
     }
-    lowest
+
+    soma
 }
